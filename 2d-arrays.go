@@ -11,26 +11,57 @@ import (
 
 // Complete the hourglassSum function below.
 func hourglassSum(arr [][]int32) int32 {
-	var i int32 = 0
-	var j int32 = 0
+	//var x int32 = 0
+	//var y int32 = 0
 	var total int32 = 0
+	var maxtotal int32 = -64
+	//var totalarr []int32
 
-	// return fmt.Println(arr[0:2])
-	fmt.Println(i)
-	fmt.Println(j)
+	/*
+		arr[y][x]
+		arr[y][x+1]
+		arr[y][x+2]
+		arr[y+1][x+1]
+		arr[y+2][x]
+		arr[y+2][x+1]
+		arr[y+2][x+1]
+	*/
 
-	return total
+	for j := 0; j < 4; j++ {
+		for i := 0; i < 4; i++ {
+			total = 0
+			for ii := 0; ii < 3; ii++ {
+				total += arr[i][ii+j]
+				fmt.Println("top", arr[i][ii+j])
+			}
+			for ii := 0; ii < 1; ii++ {
+				total += arr[i+1][ii+1+j]
+				fmt.Println("middle", arr[i+1][ii+1+j])
+			}
+			for ii := 0; ii < 3; ii++ {
+				total += arr[i+2][ii+j]
+				fmt.Println("bottom", arr[i+2][ii+j])
+			}
+			fmt.Println(total)
+			if total > maxtotal {
+				maxtotal = total
+			}
+		}
+	}
+
+	fmt.Println("max:", maxtotal)
+	return maxtotal
 }
 
 func main() {
-	reader := bufio.NewReaderSize(os.Stdin, 1024 * 1024)
+	reader := bufio.NewReaderSize(os.Stdin, 1024*1024)
 
-	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
+	/*stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
 	checkError(err)
 
 	defer stdout.Close()
 
-	writer := bufio.NewWriterSize(stdout, 1024 * 1024)
+	writer := bufio.NewWriterSize(stdout, 1024 * 1024)*/
 
 	var arr [][]int32
 	for i := 0; i < 6; i++ {
@@ -53,9 +84,9 @@ func main() {
 
 	result := hourglassSum(arr)
 
-	fmt.Fprintf(writer, "%d\n", result)
+	fmt.Printf("%d\n", result)
 
-	writer.Flush()
+	//writer.Flush()
 }
 
 func readLine(reader *bufio.Reader) string {
